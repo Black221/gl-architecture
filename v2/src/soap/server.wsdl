@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions 
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns:tns="urn:Soap" 
+targetNamespace="urn:Soap"
+>
+    <wsdl:types>
+        <xsd:schema targetNamespace="urn:Soap">
+            <xsd:element name="user">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                        <xsd:element name="username" type="xsd:string"/>
+                        <xsd:element name="password" type="xsd:string"/>
+                        <xsd:element name="token" type="xsd:string"/>
+                        <xsd:element name="expired_date" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="getUserRequest">
+        <wsdl:part name="id" type="xsd:int"/>
+        <wsdl:part name="token" type="xsd:string"/>
+    </wsdl:message>
+
+    <wsdl:message name="modifyUserRequest">
+        <wsdl:part name="id" type="xsd:int"/>
+        <wsdl:part name="username" type="xsd:string"/>
+        <wsdl:part name="password" type="xsd:string"/>
+        <wsdl:part name="token" type="xsd:string"/>
+    </wsdl:message>
+
+    <wsdl:message name="deleteUserRequest">
+        <wsdl:part name="id" type="xsd:int"/>
+        <wsdl:part name="token" type="xsd:string"/>
+    </wsdl:message>
+
+    <wsdl:message name="userResponse">
+        <wsdl:part name="user" type="tns:user"/>
+    </wsdl:message>
+
+    <wsdl:portType name="SoapPort">
+        <wsdl:operation name="getUser">
+            <wsdl:input message="tns:getUserRequest"/>
+            <wsdl:output message="tns:userResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="modifyUser">
+            <wsdl:input message="tns:modifyUserRequest"/>
+            <wsdl:output message="tns:userResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteUser">
+            <wsdl:input message="tns:deleteUserRequest"/>
+            <wsdl:output message="tns:userResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SoapBinding" type="tns:SoapPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getUser">
+            <soap:operation soapAction="urn:Soap#getUser"/>
+            <wsdl:input>
+                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="modifyUser">
+            <soap:operation soapAction="urn:Soap#modifyUser"/>
+            <wsdl:input>
+                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteUser">
+            <soap:operation soapAction="urn:Soap#deleteUser"/>
+            <wsdl:input>
+                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SoapService">
+        <wsdl:port name="SoapPort" binding="tns:SoapBinding">
+            <soap:address location="http://localhost/soap"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
