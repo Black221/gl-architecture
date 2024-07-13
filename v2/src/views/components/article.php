@@ -1,3 +1,10 @@
+<?php
+
+    if (isset($_SESSION['user'])) {
+        $user = User::fromArray($_SESSION['user']);
+    }
+
+?>
 <article>
     <h3>
         <a href="article?id=<?php echo $article->getId(); ?>">
@@ -18,8 +25,8 @@
     <p class="flex">
         <?php
             if (isset($user) && $user->getRole() == "admin") {
-                echo "<a href='article?action=modifier&id=" . $article->getId() . "'>Modifier</a>";
-                echo "<a href='article?action=supprimer&id=" . $article->getId() . "'>Supprimer</a>";
+                echo "<a href='article/modifier?action=modifier&id=" . $article->getId() . "'>Modifier</a>";
+                echo "<a href='article/supprimer?id=" . $article->getId() . "'>Supprimer</a>";
             }
         ?>
     </p>
