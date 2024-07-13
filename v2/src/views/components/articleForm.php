@@ -1,8 +1,7 @@
 
-
-<form action="article" method="post">
+<form action="article" method="<?= $method ?>">
     <label for="title">Titre</label>
-    <input type="text" name="title" id="title">
+    <input type="text" name="title" id="title" value="<?= $article ? $article->getTitle() : '' ?>">
     <label for="content">Contenu</label>
     <textarea name="content" id="content"></textarea>
     <label for="category">Catégorie</label>

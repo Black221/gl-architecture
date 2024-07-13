@@ -25,19 +25,29 @@ $router->add('GET', '/article', function() use ($articleController) {
     require_once 'src/views/article.php';
 });
 
-$router->add('GET', '/article/create', function() {
+$router->add('GET', '/nouveau-article', function() use ($categoryController) {
+    $method = 'POST';
+    $article = null;
+    $categories = $categoryController->displayAll();
     require_once 'src/views/create-article.php';
 });
 
-$router->add('GET', '/article/edit', function() use ($articleController) {
+$router->add('GET', '/article/modifier', function() use ($articleController) {
     $article = $articleController->display();
+    $method = 'PUT';
     require_once 'src/views/edit-article.php';
 });
 
-$router->add('POST', '/nouveau-article', function() use ($articleController) {
+$router->add('GET', '/article/supprimer', function() use ($articleController) {
+    $article = $articleController->display();
+    $method = 'DELETE';
+    require_once 'src/views/edit-article.php';
+});
+
+$router->add('POST', '/article', function() use ($articleController) {
     $message = $articleController->create();
-    // redirect to the created article
-    header("Location: /nouveau-articles");
+    // redirect to the home page
+    header("Location: /articles");
 });
 
 $router->add('PUT', '/article', function() use ($articleController) {
@@ -58,9 +68,4 @@ $router->add('GET', '/articles', function() use ($articleController, $categoryCo
     $category = $categoryController->display();
 
     require_once 'src/views/articles.php';
-});
-
-$router->add('GET', '/nouveau-article', function() use ($categoryController) {
-    $categories = $categoryController->displayAll();
-    require_once 'src/views/create-article.php';
 });

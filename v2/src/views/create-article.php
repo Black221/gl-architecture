@@ -9,22 +9,9 @@
 <body>
     <main>
         <?php 
-            require_once '/components/header.php';
+            require_once __DIR__ . '/components/header.php';
+            require_once __DIR__ .'/components/articleForm.php';
         ?>
-        <h1>Nouveau article</h1>
-        <form action="/article" method="POST">
-            <label for="title">Titre</label>
-            <input type="text" name="title" id="title">
-            <label for="content">Contenu</label>
-            <textarea name="content" id="content"></textarea>
-            <label for="category">Categorie</label>
-            <select name="category" id="category">
-                <?php foreach ($categories as $category) : ?>
-                    <option value="<?= $category->getId() ?>"><?= $category->getLabel() ?></option>
-                <?php endforeach; ?>
-            </select>
-            <button type="submit">Ajouter</button>
-        </form>
     </main>
 </body>
 </html>

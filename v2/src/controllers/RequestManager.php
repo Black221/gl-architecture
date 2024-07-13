@@ -59,7 +59,7 @@ class RequestManager {
             $body = [];
             for ($i = 0; $i < count($tmp); $i++) {
                 $param = explode('=', $tmp[$i]);
-                $body[$param[0]] = $param[1];
+                $body[$param[0]] = str_replace("+", " ", $param[1]);
             }
             $body = json_encode($body);
         }
