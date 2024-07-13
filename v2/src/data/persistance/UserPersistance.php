@@ -53,10 +53,10 @@ class UserPersistance {
         $date = new DateTime();
 
         return $this->persistance->find(
-            ["token", "expired_date"], 
-            ["=", ">="], 
-            [$token, $date->format('Y-m-d')], 
-            ["AND", ""]
+            ["role", "token", "expired_date"], 
+            ["=", "=", ">="], 
+            ["admin", $token, $date->format('Y-m-d')], 
+            ["OR", "AND", ""]
         );
     }
 }
