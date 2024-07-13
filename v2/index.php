@@ -21,10 +21,9 @@ $router->add('GET', '/api', function() {
 $uri = $_SERVER['REQUEST_URI'];
 $uri = explode('?', $uri);
 if (count($uri) > 2) 
-$params = $uri[1];
+    $params = $uri[1];
 
 if (str_contains($uri[0], '/soap')) {
-    
     require_once 'src/soap/SoapServer.php';
 } else {
     $router->run();

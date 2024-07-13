@@ -40,7 +40,7 @@ class ArticleService {
     public function getArticle($id) {
         $result = $this->articlePersistance->getArticle($id);
         if ($result == null)
-            return null;
+            return Response::fromArray(["message" => "Article not found"]);
         return Article::fromArray($result);
     }
 

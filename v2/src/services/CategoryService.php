@@ -27,7 +27,7 @@ class CategoryService  {
     public function getCategory($id) {
         $result = $this->categoryPersistance->getCategory($id);
         if ($result == null)
-            return null;
+            return Response::fromArray(["message" => "Category not found"]);
         return Category::fromArray($result);
     }
 

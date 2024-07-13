@@ -1,7 +1,7 @@
 import requests
 from routes.article import get_articles, get_article, post_article, put_article, delete_article
 from routes.category import get_categories, get_category, post_category, put_category, delete_category
-from routes.user import create_user, get_users, get_user, update_user, delete_user
+from routes.user import authenticate, create_user, get_users, get_user, update_user, delete_user, generate_token
 
 base_url = 'http://localhost:80/api/'
 
@@ -26,6 +26,8 @@ routes = {
         "article": post_article,
         "category": post_category,
         "user": create_user,
+        "authenticate": authenticate,
+        "token": generate_token
     },
     "PUT": {
         "article": put_article,

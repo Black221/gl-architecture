@@ -1,4 +1,5 @@
 import sys
+import json
 
 def help():
     print("GET welcome")
@@ -22,9 +23,32 @@ def help():
 
 
 def parse_args():
-    if len(sys.argv) == 2 and sys.argv[1] == "GET" and sys.argv[2] == "welcome":
+    if len(sys.argv) <= 1:
+        return ["LOOP", "", ""] 
+    if sys.argv[1] == "GET" and sys.argv[2] == "welcome":
         return ["GET", "welcome"]
     if len(sys.argv) < 2 or sys.argv[1] == "help" or (sys.argv[1] != "GET" and sys.argv[1] != "POST" and sys.argv[1] != "PUT" and sys.argv[1] != "DELETE"):
         help()
     return sys.argv[1], sys.argv[2], sys.argv[3:]
         
+
+
+def userForm(): 
+    username = input('Username: ')
+    password = input('Password: ')
+    role = input('Role: ')
+    return username, password, role
+
+def articleForm():
+    title = input('Title: ')
+    content = input('Content: ')
+    category = input('Category: ')
+    return title, content, category
+
+def categoryForm():
+    name = input('Name: ')
+    return name
+
+def display(response):
+    data = json.loads(response)
+    print(json.dumps(data, indent=4))

@@ -1,95 +1,179 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions 
-xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-xmlns:tns="urn:Soap" 
-targetNamespace="urn:Soap"
->
-    <wsdl:types>
-        <xsd:schema targetNamespace="urn:Soap">
-            <xsd:element name="user">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="id" type="xsd:int"/>
-                        <xsd:element name="username" type="xsd:string"/>
-                        <xsd:element name="password" type="xsd:string"/>
-                        <xsd:element name="token" type="xsd:string"/>
-                        <xsd:element name="expired_date" type="xsd:string"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
+<?xml version="1.0"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://localhost:80/soap"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="SoapService"
+             targetNamespace="http://localhost:80/soap">
+    <types>
+        <xsd:schema targetNamespace="http://localhost:80/soap">
+            <xsd:complexType name="User">
+                <xsd:all>
+                    <xsd:element name="id" type="xsd:int"/>
+                    <xsd:element name="username" type="xsd:string"/>
+                    <xsd:element name="password" type="xsd:string"/>
+                    <xsd:element name="token" type="xsd:string"/>
+                    <xsd:element name="expired_date" type="xsd:string"/>
+                </xsd:all>
+            </xsd:complexType>
         </xsd:schema>
-    </wsdl:types>
+    </types>
 
-    <wsdl:message name="getUserRequest">
-        <wsdl:part name="id" type="xsd:int"/>
-        <wsdl:part name="token" type="xsd:string"/>
-    </wsdl:message>
+    <portType name="SoapServicePort">
+        <operation name="authenticate">
+            <input message="tns:authenticateRequest"/>
+            <output message="tns:userResponse"/>
+        </operation>
 
-    <wsdl:message name="modifyUserRequest">
-        <wsdl:part name="id" type="xsd:int"/>
-        <wsdl:part name="username" type="xsd:string"/>
-        <wsdl:part name="password" type="xsd:string"/>
-        <wsdl:part name="token" type="xsd:string"/>
-    </wsdl:message>
+        <operation name="createUser">
+            <input message="tns:createUserRequest"/>
+            <output message="tns:userResponse"/>
+        </operation>
 
-    <wsdl:message name="deleteUserRequest">
-        <wsdl:part name="id" type="xsd:int"/>
-        <wsdl:part name="token" type="xsd:string"/>
-    </wsdl:message>
+        <operation name="getUser">
+            <input message="tns:getUserRequest"/>
+            <output message="tns:userResponse"/>
+        </operation>
 
-    <wsdl:message name="userResponse">
-        <wsdl:part name="user" type="tns:user"/>
-    </wsdl:message>
+        <operation name="getAllUsers">
+            <input message="tns:tokenRequest"/>
+            <output message="tns:userResponse"/>
+        </operation>
 
-    <wsdl:portType name="SoapPort">
-        <wsdl:operation name="getUser">
-            <wsdl:input message="tns:getUserRequest"/>
-            <wsdl:output message="tns:userResponse"/>
-        </wsdl:operation>
-        <wsdl:operation name="modifyUser">
-            <wsdl:input message="tns:modifyUserRequest"/>
-            <wsdl:output message="tns:userResponse"/>
-        </wsdl:operation>
-        <wsdl:operation name="deleteUser">
-            <wsdl:input message="tns:deleteUserRequest"/>
-            <wsdl:output message="tns:userResponse"/>
-        </wsdl:operation>
-    </wsdl:portType>
-    <wsdl:binding name="SoapBinding" type="tns:SoapPort">
+        <operation name="updateUser">
+            <input message="tns:updateUserRequest"/>
+            <output message="tns:userResponse"/>
+        </operation>
+
+        <operation name="deleteUser">
+            <input message="tns:deleteUserRequest"/>
+            <output message="tns:userResponse"/>
+        </operation>
+
+        <operation name="generateToken">
+            <input message="tns:generateToken"/>
+            <output message="tns:userResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="SoapServiceBinding" type="tns:SoapServicePort">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="getUser">
-            <soap:operation soapAction="urn:Soap#getUser"/>
-            <wsdl:input>
-                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="modifyUser">
-            <soap:operation soapAction="urn:Soap#modifyUser"/>
-            <wsdl:input>
-                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="deleteUser">
-            <soap:operation soapAction="urn:Soap#deleteUser"/>
-            <wsdl:input>
-                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="encoded" namespace="urn:Soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-            </wsdl:output>
-        </wsdl:operation>
-    </wsdl:binding>
-    <wsdl:service name="SoapService">
-        <wsdl:port name="SoapPort" binding="tns:SoapBinding">
-            <soap:address location="http://localhost/soap"/>
-        </wsdl:port>
-    </wsdl:service>
-</wsdl:definitions>
+        <operation name="authenticate">
+            <soap:operation soapAction="http://localhost:80/soap#authenticate"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="createUser">
+            <soap:operation soapAction="http://localhost:80/soap#createUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="getUser">
+            <soap:operation soapAction="http://localhost:80/soap#getUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="getAllUsers">
+            <soap:operation soapAction="http://localhost:80/soap#getAllUsers"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="updateUser">
+            <soap:operation soapAction="http://localhost:80/soap#updateUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="deleteUser">
+            <soap:operation soapAction="http://localhost:80/soap#deleteUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="generateToken">
+            <soap:operation soapAction="http://localhost:80/soap#generateToken"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <message name="generateToken">
+        <part name="id" type="xsd:string"/>
+        <part name="token" type="xsd:string"/>
+    </message>
+
+    <message name="authenticateRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+    </message>
+
+    <message name="tokenRequest">
+        <part name="token" type="xsd:string"/>
+    </message>
+
+    <message name="createUserRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="token" type="xsd:string"/>
+    </message>
+
+    <message name="getUserRequest">
+        <part name="id" type="xsd:int"/>
+        <part name="token" type="xsd:string"/>
+    </message>
+
+    <message name="updateUserRequest">
+        <part name="id" type="xsd:int"/>
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="token" type="xsd:string"/>
+    </message>
+
+    <message name="deleteUserRequest">
+        <part name="id" type="xsd:int"/>
+        <part name="token" type="xsd:string"/>
+    </message>
+
+    <message name="userResponse">
+        <part name="return" type="xsd:string"/>
+    </message>
+
+    <service name="SoapServiceService">
+        <port name="SoapServicePort" binding="tns:SoapServiceBinding">
+            <soap:address location="http://localhost:80/soap"/>
+        </port>
+    </service>
+</definitions>

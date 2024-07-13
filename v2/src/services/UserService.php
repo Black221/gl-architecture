@@ -19,7 +19,7 @@ class UserService {
         if (count($res) > 0) {
             return User::fromArray($res[0]);
         }
-        return null;
+        return Response::fromArray(["message" => "Invalid username or password"]);
     }
 
     public function register($data) {
@@ -47,10 +47,9 @@ class UserService {
 
     public function getUser($id) {
         $res = $this->userPersistance->getUser($id);
-        if (count($res) > 0) {
-            return User::fromArray($res[0]);
-        }
-        return null;
+        if ($res == null)
+            return Response::fromArray(["message" => "User not found"]);
+        return User::fromArray($res);
     }
 
     public function getAllUsers() {

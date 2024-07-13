@@ -2,6 +2,7 @@
 
 require_once 'src/data/persistance/UserPersistance.php';
 require_once 'src/models/Token.php';
+require_once 'src/models/Response.php';
 
 class TokenService {
 
@@ -17,7 +18,12 @@ class TokenService {
         $date = new DateTime();
         $date->add(new DateInterval('P1D'));
         $data = new Token($token, $date);
-        $this->userPersistence->generateToken($id, $data);
+        $res = $this->userPersistence->generateToken($id, $data);
+        if ($res) {
+            return Response::fromArray(["token" => $token]);
+        } else {
+            return Response::fromArray(["message" => "Error generating token"]);
+        }
     }
 
     
