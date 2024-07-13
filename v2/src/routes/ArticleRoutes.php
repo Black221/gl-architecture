@@ -27,21 +27,25 @@ $router->add('GET', '/article', function() use ($articleController) {
 
 $router->add('GET', '/nouveau-article', function() use ($categoryController) {
     $method = 'POST';
+    $action = '';
     $article = null;
     $categories = $categoryController->displayAll();
     require_once 'src/views/create-article.php';
 });
 
-$router->add('GET', '/article/modifier', function() use ($articleController) {
+$router->add('GET', '/article/modifier', function() use ($articleController, $categoryController) {
+    $method = 'POST';
+    $categories = $categoryController->displayAll();
     $article = $articleController->display();
-    $method = 'PUT';
+    $action = '/modifier?id='. $article->getId();
     require_once 'src/views/edit-article.php';
 });
 
-$router->add('GET', '/article/supprimer', function() use ($articleController) {
-    $article = $articleController->display();
-    $method = 'DELETE';
-    require_once 'src/views/edit-article.php';
+
+$router->add('GET', '/article/supprimer', function() use ($articleController, $categoryController) {
+    $method = 'POST';
+    $article = $articleController->delete();
+    header("Location: /articles");
 });
 
 $router->add('POST', '/article', function() use ($articleController) {
@@ -50,13 +54,13 @@ $router->add('POST', '/article', function() use ($articleController) {
     header("Location: /articles");
 });
 
-$router->add('PUT', '/article', function() use ($articleController) {
+$router->add('POST', '/article/modifier', function() use ($articleController) {
     $message = $articleController->update();
     // redirect to the updated article
     header("Location: /articles");
 });
 
-$router->add('DELETE', '/article', function() use ($articleController) {
+$router->add('POST', '/article/supprimer', function() use ($articleController) {
     $message = $articleController->delete();
     // redirect to the home page
     header("Location: /articles");
@@ -66,6 +70,5 @@ $router->add('GET', '/articles', function() use ($articleController, $categoryCo
     $categories = $categoryController->displayAll();
     $articles = $articleController->displayByCategory();
     $category = $categoryController->display();
-
     require_once 'src/views/articles.php';
 });

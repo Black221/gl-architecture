@@ -24,6 +24,8 @@
         ?>
             <li><a href="logout">Déconnexion</a></li> 
         <?php
+            }else{
+                echo "<li><a href='connexion'>Connexion</a></li>";
             }
         ?>
         </ul>

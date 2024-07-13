@@ -1,5 +1,6 @@
 <?php
 
+
 require_once 'lib/data_format_utils.php';
 require_once 'src/routes/Router.php';
 
@@ -13,7 +14,6 @@ require_once 'src/routes/api/CategoryApiRoutes.php';
 
 
 $router = Router::getInstance();
-
 $router->add('GET', '/api', function() {
     print "Welcome to the API";
 });

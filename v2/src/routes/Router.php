@@ -21,11 +21,13 @@ class Router {
     }
 
     public function run() {
+
+        $baseUrl = '';
         $uri = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
         // remove parameters
         $uri = explode('?', $uri)[0];
-
+        $uri = str_replace($baseUrl, '', $uri);
         // session management
         session_start();
 
